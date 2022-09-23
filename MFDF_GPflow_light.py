@@ -31,8 +31,8 @@ def IntermediateSurrogate(X_training, Y_training, kernel, mean_function = None, 
                           likelihood_variance = 1e-3, train_likelihood_var = True):
     ''' Function that trains an intermediate surrogate model for an information
         source using Gaussian Processes. 
-    '''
-    ''' Inputs:
+        
+        Inputs:
         X_training: list of D arrays with training data inputs (need to be reshaped to (N,D)).
         Y_training: array with training data output (need to be reshaped to (N,1)).
         kernel: GPflow kernel function.
@@ -40,10 +40,11 @@ def IntermediateSurrogate(X_training, Y_training, kernel, mean_function = None, 
         name: string with the name of the information source.
         likelihood_variance: float initial value of likelihood variance.
         train_likelihood_var: boolean on training likelihood variance.
-    '''
-    ''' Outputs:
+
+        Outputs:
         model: GPflow trained model.
-    '''    
+    ''' 
+    
     ''' Format training data for the GP regression '''
     if len(X_training) == 1:
         X = X_training[0].reshape(-1,1)
@@ -73,12 +74,12 @@ def IntermediateSurrogate(X_training, Y_training, kernel, mean_function = None, 
 def Predict(model, X_prediction):
     ''' 
     Function that uses the model to make some predictions at defined prediction points.
-    '''
-    ''' Inputs:
+
+        Inputs:
         model: GPflow trained model.
         X_prediction: array of the shape (N_prediction, D) made of prediction points.
-    '''
-    ''' Outputs:
+
+        Outputs:
         Y_mean: Tensor of the shape (N_prediction, 1) of the posterior mean distribution.
         Y_std: Tensor of the shape (N_prediction, 1) of the posterior standard deviation distribution.
     ''' 
@@ -89,12 +90,12 @@ def Predict(model, X_prediction):
 def FidelityStd(X_prediction, constant_fidelity):
     ''' Function that constructs a constant fidelity variance associated to
         the uncertainty of an information source.
-    '''
-    ''' Inputs:
+
+        Inputs:
         X_prediction: array of the shape (N_prediction, D) made of prediction points. 
         constant_fidelity: constant float value of the fidelity function over the prediction space. 
-    '''
-    ''' Outputs:
+
+        Outputs:
         Y_fid_std: tensor of the shape (N_prediction, 1) of the fidelity function.
     '''  
     Y_std_fid = constant_fidelity * np.ones((X_prediction.shape[0], 1))
@@ -104,12 +105,12 @@ def FidelityStd(X_prediction, constant_fidelity):
 
 def MultifidelityFusion(IntermediateSurrogates):
     ''' Function that constructs a multifidelity data fusion model from each intermediate surrogate.
-    '''
-    ''' Inputs:
+
+        Inputs:
         IntermediateSurrogates: list of 3-tensors lists corresponding to each intermediate surrogate
         prediction. The number of 3-arrays lists is the number of information sources.
-    '''
-    ''' Outputs:
+
+        Outputs:
         Y_mean_multi: tensor of the shape (N_prediction, 1) of the multifidelity mean.
         Y_std_multi: tensor of the shape (N_prediction, 1) of the multifidelity standard deviation.
     '''
@@ -142,13 +143,13 @@ def MultifidelityFusion(IntermediateSurrogates):
 #==============================================================================
 def dataset_separation(X_t, Y_t, ratio_training_validation):
     ''' Fonction used to split a given dataset into two dataset.
-    '''
-    ''' Inputs:
+
+        Inputs:
         X_t: list of D arrays corresponding to the input space.
         Y_t: array corresponding to the scalar of interest.
         ratio_training_validation: float corresponding to the ratio of the length of the output training data set to the validation data set.
-    '''
-    ''' Outputs:
+
+        Outputs:
         X_training: list of D arrays corresponding to the training input space.
         Y_training: array corresponding to the training scalar of interest.
         X_validation: list of D arrays corresponding to the validation input space.
@@ -187,11 +188,11 @@ def dataset_separation(X_t, Y_t, ratio_training_validation):
 def PlotPredictionSpace2D(design_space):
     ''' Function that constructs an uniform set where the gaussian process will be 
     be interfered on. 
-    ''' 
-    ''' Inputs:
+
+        Inputs:
         design_space: list of 2 2-elements lists made from the design interval for each dimension.
-    '''
-    ''' Outputs:
+
+        Outputs:
         X_prediction: array of the shape (N_prediction, 2) used for prediction.
         X_plot1: array formed as a grid of values of dimension 1 for 3D-plot.
         X_plot2: array formed as a grid of values of dimension 2 for 3D-plot.
